@@ -37,4 +37,5 @@ const note = {
       api_paste_name: `${note.title}`,
       api_paste_expire_date : "1H",
       api_paste_private: 1
-    })
+    })  
+  })  

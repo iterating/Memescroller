@@ -49,37 +49,38 @@ analyzeBtn.textContent = "Analyze";
 imageDisplay.appendChild(analyzeBtn);
 
 analyzeBtn.addEventListener("click", () => {
-  const imgUrl = imageData[currentIndex].data.url;
-  axios.post("https://trace.moe/api/search", { url: imgUrl }, {   mode: 'cors',
-    headers: { "Content-Type": "application/json" }
-   })
-    .then(res => {
-      if (res.data.result.length > 0) {
-        const anime = res.data.result[0];
-        const title = anime.anilist.title.romaji;
-        const episodes = anime.episode;
-        const time = anime.at;
-        const similarity = anime.similarity;
-        const video = anime.video;
-        const thumbnail = anime.image;
-
-        const resultDiv = document.createElement("div");
-        resultDiv.classList.add("result");
-        resultDiv.innerHTML = `
-          <h2>${title}</h2>
-          <p>Episode: ${episodes}</p>
-          <p>Time: ${time}</p>
-          <p>Similarity: ${similarity}</p>
-          <img src="${thumbnail}" />
-          <video src="${video}" controls></video>
-        `;
-        imageDisplay.appendChild(resultDiv);
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      alert("Error fetching data from Trace.moe");
-    });
+  axios.get('http://localhost:3000/api/search')
+  .then(response => {
+    const res = response.data;
+    if (res && res.data && res.data.result && res.data.result.length > 0) {
+      const anime = res.data.result[0];
+      const title = anime.anilist ? anime.anilist.title.romaji : "";
+      const episodes = anime.episode || "";
+      const time = anime.at || "";
+      const similarity = anime.similarity || "";
+      const video = anime.video || "";
+      const thumbnail = anime.image || "";
+      
+      const resultDiv = document.createElement("div");
+      resultDiv.classList.add("result");
+      resultDiv.innerHTML = `
+        <h2>${title}</h2>
+        <p>Episode: ${episodes}</p>
+        <p>Time: ${time}</p>
+        <p>Similarity: ${similarity}</p>
+        <img src="${thumbnail}" />
+        <video src="${video}" controls></video>
+      `;
+      imageDisplay.appendChild(resultDiv);
+    } else {
+      console.warn("No data found");
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Error fetching data from Trace.moe");
+  });
 });
 
-getImage();
+
+getImage(); 
