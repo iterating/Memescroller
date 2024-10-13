@@ -3,15 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <title>Document</title>
 </head>
 <body>
-    <h1>Note Taking App</h1>
+    <h1>App</h1>
+
+    <div id="image-display" style="width: 100vw; height: 100vh; overflow-y: scroll; max-width: 1000px; max-height: 100vw; box-sizing: border-box; margin: 0 auto;">
+        <button id="prev-img">Previous</button>
+        <img id="current-img" src="">
+        <button id="next-img">Next</button>
+        
+    </div>
+
+
+
+<div id="notes"
     <input type="text" id="new-note" placeholder="Enter new note">
     <input type="text" id="note-title" placeholder="Enter note title">
     <button id="save-note">Save Note</button>
     <ul id="notes-list"></ul>
+</div>
     
-    <script src="./src/script.mjs"></script>
+<script type="module" src="src/script.mjs"></script>
 </body>
 </html>
