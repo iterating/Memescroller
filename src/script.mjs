@@ -29,7 +29,7 @@ async function getImage() {
     if(currentIndex > 0) {
       currentIndex--;
       if (imageData.length > 0) {
-        imageDisplay = `url(${imageData[currentIndex].data.url})`;
+        imageDisplay.style.backgroundImage = `url(${imageData[currentIndex].data.url})`;
       }
     }
   });
@@ -51,7 +51,8 @@ imageDisplay.appendChild(analyzeBtn);
 analyzeBtn.addEventListener("click", () => {
   const imgUrl = imageData[currentIndex].data.url;
   axios.post("https://trace.moe/api/search", { url: imgUrl }, {   mode: 'cors',
-    headers: { "Content-Type": "application/json" } })
+    headers: { "Content-Type": "application/json" }
+   })
     .then(res => {
       if (res.data.result.length > 0) {
         const anime = res.data.result[0];
