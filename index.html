@@ -21,14 +21,16 @@
 
 
 <div id="notes"
-    <input type="text" id="new-note" placeholder="Enter new note">
-    <input type="text" id="note-title" placeholder="Enter note title">
-    <input type="text" id="note-content" placeholder="Enter note content">
-    <button id="save-btn">Save Note</button>
-    <ul id="notes-list"></ul>
+<h1>Note Taking</h1>
+<textarea id="note-content" rows="10" cols="50"></textarea>
+<br>
+<button onclick="saveNote()">Save Note</button>
+<h2>Saved Notes</h2>
+<ul id="saved-notes"></ul>
+<div id="result"></div>
 </div>
     
-<script type="module" src="src/script.mjs"></script>
-<script type="module" src="src/notes.mjs"></script>
+<script src="./src/script.mjs"></script>
+<script src="./src/notes.mjs"></script>
 </body>
 </html>
