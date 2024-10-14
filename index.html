@@ -11,26 +11,25 @@
 <body>
     <h1>App</h1>
 
+    <button id="prev-img">Previous</button>
+    <img id="current-img" src="">
+    <button id="random">Random</button>
+    <button id="next-img">Next</button>
     <div id="image-display" style="width: 100vw; height: 100vh; overflow-y: scroll; max-width: 1000px; max-height: 100vw; box-sizing: border-box; margin: 0 auto;">
-        <button id="prev-img">Previous</button>
-        <img id="current-img" src="">
-        <button id="next-img">Next</button>
-        
     </div>
+    <div id="animematch" style="width: 100vw;" height="100vh"></div>
 
 
 
-<div id="notes"
-<h1>Note Taking</h1>
-<textarea id="note-content" rows="10" cols="50"></textarea>
-<br>
-<button onclick="saveNote()">Save Note</button>
-<h2>Saved Notes</h2>
-<ul id="saved-notes"></ul>
-<div id="result"></div>
-</div>
-<!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> -->
-<script src="./src/script.mjs"></script>
-<!-- <script src="./src/notes.js"></script> -->
-</body>
+    <div id="notes"
+    <p><h1>Note Taking </h1></p> 
+    <textarea id="note-content" rows="10" cols="50"></textarea>
+    <br>
+    <button>Save Note</button>
+    <h2>Saved Notes</h2>
+    <ul id="saved-notes"></ul>
+    <div id="result"></div>
+    </div>
+    <script src="./src/script.mjs"></script>
+    </body>
 </html>

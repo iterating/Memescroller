@@ -1,85 +1,122 @@
-// import axios from "axios";
-// const PASTEBIN_API_KEY = "l6ccuOpobsa5IisYMP37Epqsb9kP2ZuK"
-// https://www.reddit.com/r/animememes/top/.json?limit=100
 const prevBtn = document.querySelector("#prev-img");
 const nextBtn = document.querySelector("#next-img");
+const randomBtn = document.querySelector("#random");
 const imageDisplay = document.querySelector("#image-display");
-const currentImg = document.querySelector("#current-img");
+const animematch = document.querySelector("#animematch");
+const analyzeBtn = document.createElement("button");
 let imageData = [];
 let currentIndex = 0;
 
+// Function to fetch images from Reddit
 async function getImage() {
   try {
-    const response = await axios.get("https://www.reddit.com/r/animememes/hot/.json?limit=1000");
-    imageData = response.data.data.children;
+    const sourceUrls = [
+      "https://www.reddit.com/r/animememes/hot/.json?limit=100",
+      "https://www.reddit.com/r/animememes/hot/.json?limit=100",
+    ];
+
+    const response = await Promise.allSettled(
+      sourceUrls.map((url) => axios.get(url))
+    );
+
+    imageData = response[0].value.data.data.children;
     if (imageData && imageData.length > 0) {
-      imageDisplay.style.backgroundRepeat = "no-repeat";
-      imageDisplay.style.backgroundPosition = "center";
-      imageDisplay.style.backgroundSize = "contain";
-      imageDisplay.style.backgroundImage = `url(${imageData[currentIndex].data.url})`;
+      displayImage(currentIndex);
     }
   } catch (err) {
     console.error(err);
     alert("Error fetching data from Reddit");
-  } finally {
-    prevBtn.addEventListener("click", () => {
-      if (imageData && currentIndex > 0) {
-        currentIndex--;
-        if (imageData.length > 0) {
-          imageDisplay.style.backgroundImage = `url(${imageData[currentIndex].data.url})`;
-        }
-      }
-    });
-    
-    nextBtn.addEventListener("click", () => {
-      if (imageData && currentIndex < imageData.length - 1) {
-        currentIndex++;
-        if (imageData.length > 0) {
-          imageDisplay.style.backgroundImage = `url(${imageData[currentIndex].data.url})`;
-        }
-      }
-    });
   }
 }
 
-const analyzeBtn = document.createElement("button");
-analyzeBtn.textContent = "Analyze";
-imageDisplay.appendChild(analyzeBtn);
+// Function to display image based on index
+function displayImage(index) {
+  if (imageData && imageData.length > 0) {
+    imageDisplay.style.backgroundRepeat = "no-repeat";
+    imageDisplay.style.backgroundPosition = "center";
+    imageDisplay.style.backgroundSize = "contain";
+    imageDisplay.style.backgroundImage = `url(${imageData[index].data.url})`;
+  }
+}
 
-analyzeBtn.addEventListener("click", () => {
-  app.get('/api/search', function (req, res) {
-    const url = req.query.url;
-    if (!url) {
-      res.status(400).send('No URL provided');
-      return;
+// Event listeners for navigation buttons
+prevBtn.addEventListener("click", () => {
+  if (imageData && currentIndex > 0) {
+    currentIndex--;
+    animematch.innerHTML = "";
+    displayImage(currentIndex);
+
+  }
+});
+
+randomBtn.addEventListener("click", () => {
+  if (imageData && imageData.length > 0) {
+    currentIndex = Math.floor(Math.random() * imageData.length);
+    animematch.innerHTML = "";
+    displayImage(currentIndex);
+
+  }
+});
+
+nextBtn.addEventListener("click", () => {
+  if (imageData && currentIndex < imageData.length - 1) {
+    currentIndex++;
+    animematch.innerHTML = "";
+    displayImage(currentIndex);
+
+  }
+});
+
+// Function to search anime using backend
+async function searchAnime() {
+  const imageUrl = imageData[currentIndex].data.url;
+  try {
+    const response = await fetch(
+      `http://localhost:9000/api/search?url=${encodeURIComponent(imageUrl)}`
+    );
+    const results = await response.json();
+
+    if (!results || results.length === 0) {
+      throw new Error("No results found");
     }
-    
-      const anime = resData.data.result[0];
-      const title = anime.anilist ? anime.anilist.title.romaji : "";
-      const episodes = anime.episode || "";
-      const time = anime.at || "";
-      const similarity = anime.similarity || "";
-      const video = anime.video || "";
-      const thumbnail = anime.image || "";
-      
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    console.log(results);
+    displayResults(results);
+  } catch (err) {
+    console.error("Error:", err);
+    alert("Failed to retrieve data");
+  }
+}
+
+// Function to display results
+function displayResults(results) {
+  try {
+    if (!results || results.length === 0) {
+      throw new Error("No results found");
+    }
+    animematch.innerHTML = "";
+    results.forEach((anime) => {
       const resultDiv = document.createElement("div");
       resultDiv.classList.add("result");
       resultDiv.innerHTML = `
-        <h2>${title}</h2>
-        <p>Episode: ${episodes}</p>
-        <p>Time: ${time}</p>
-        <p>Similarity: ${similarity}</p>
-        <img src="${thumbnail}" />
-        <video src="${video}" controls></video>
+        <h2>${anime.filename}</h2>
+        <p>Episode: ${anime.episode}</p>
+        <img src="${anime.image}" />
+        <video src="${anime.video}" controls></video>
       `;
-      imageDisplay.appendChild(resultDiv);
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).send('Failed to retrieve data');
+
+      animematch.appendChild(resultDiv);
     });
-  });
+  } catch (err) {
+    console.error("Error:", err);
+    alert("Failed to retrieve data");
+  }
+}
+analyzeBtn.textContent = "Analyze";
+imageDisplay.appendChild(analyzeBtn);
+analyzeBtn.addEventListener("click", searchAnime);
 
-
-getImage(); 
-
+// Fetch images on load
+getImage();
