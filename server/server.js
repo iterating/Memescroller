@@ -1,23 +1,20 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = 9000;
 const axios = require('axios');
 var cors = require('cors')
 
-cors({ origin: 'http://localhost:3000' })
+cors({ origin: 'http://localhost:9000' })
 
 
 app.get('/api', function (req, res, next) {
-    const url = 'https://trace.moe/api/search';
-    axios.get(url)
-    .then(response => {
-        if (response && response.data) {
-            res.json(response.data);
-        } else {
-            res.status(500).send('Failed to retrieve data');
-        }
-    })
+    axios.get('http://localhost:9000/api/search')
+    .then(response => console.log(response.data))
     .catch(error => {
+      console.error(error);
+      console.log('Request headers:', error.config.headers);
+      console.log('Request data:', error.config.data);
+    });
         if (error.response) {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
@@ -33,7 +30,6 @@ app.get('/api', function (req, res, next) {
         }
         res.status(500).send('Failed to retrieve data');
     });
-});
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
