@@ -50,10 +50,10 @@ app.post('/notes', async (req, res) => {
 app.get('/favorites', async (req, res) => {
   try {
     const userKey = req.query.api_user_key;
-    if (!userKey) {
-      console.error('Error: Missing user key');
-      return res.status(400).send({ error: 'Missing user key' });
-    }
+    // if (!userKey) {
+    //   console.error('Error: Missing user key');
+    //   return res.status(400).send({ error: 'Missing user key' });
+    // }
 
     const response = await axios.get('https://pastebin.com/api/api_list.php', {
       params: {
