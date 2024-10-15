@@ -2,13 +2,12 @@ const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
 const app = express();
-// const port = 9000;
+const port = 9000;
 const pastebinKey = 'l6ccuOpobsa5IisYMP37Epqsb9kP2ZuK'; 
 
 app.use(
   cors({
     origin: "*",
-    allowedHeaders: ["Content-Type"],
   })
 );
 app.use(express.json());
@@ -55,7 +54,7 @@ app.get('/favorites', async (req, res) => {
     //   return res.status(400).send({ error: 'Missing user key' });
     // }
 
-    const response = await axios.get('https://pastebin.com/api/api_list.php', {
+    const response = await axios.post('https://pastebin.com/api/api_post.php', {
       params: {
         api_dev_key: pastebinKey,
         api_user_key: userKey
@@ -98,8 +97,8 @@ app.get("/api/search", async (req, res) => {
   }
 });
 
-// app.listen(port, () => {
-//   console.log(`Server listening at http://localhost:${port}`);
-// });
+app.listen(port, () => {
+  console.log(`Server listening at http://localhost:${port}`);
+});
 
 

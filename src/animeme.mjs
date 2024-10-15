@@ -109,7 +109,7 @@ async function searchAnime() {
       throw new Error("No results found");
     }
     if (!response.ok) {
-      throw new Error("Network response was not ok");
+      throw new Error("Error in response");
     }
     // Slice and display the top 3 results
     displayResults(results.slice(0, 3));
