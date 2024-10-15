@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
 const app = express();
+const serverless = require('serverless-http');
 // const port = 9000;
 const pastebinKey = 'l6ccuOpobsa5IisYMP37Epqsb9kP2ZuK'; 
 
@@ -56,6 +57,7 @@ app.get('/favorites', async (req, res) => {
     })
     if (response === null || !response.data) {
       console.error('Error: Missing response data');
+      return res.status(500).send({ error: 'Missing response data' });
     }
 
     const notes = [];
@@ -66,6 +68,10 @@ app.get('/favorites', async (req, res) => {
     res.send(notes);
   } catch (error) {
     console.error('Failed to fetch notes:', error);
+    if (error.response) {
+      console.error('Error response:', error.response.data);
+    }
+    return res.status(500).send({ error: 'Error fetching notes: ' + error.message });
   }
 });
 
@@ -96,6 +102,7 @@ app.get('/favorites', async (req, res) => {
 // app.listen(port, () => {
 //   console.log(`Server listening at http://localhost:${port}`);
 // });
-app.listen
+app.listenmodule.exports.handler = serverless(app);
+
 
 
