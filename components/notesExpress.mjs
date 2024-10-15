@@ -3,7 +3,7 @@ const savedNotes = document.getElementById("saved-notes");
 export async function saveNote() {
   const content = document.getElementById("note-content")?.value;
   const noteTitle = document.getElementById("note-title")?.value;
-  if (!content || !noteTitle) {
+  if (!content ) {
     console.error("Error: Missing note title or content");
     return;
   }
@@ -65,7 +65,7 @@ export async function fetchNotes() {
     if (lastNote) {
       try {
         const note = JSON.parse(lastNote);
-        if (note && note.title && note.content) {
+        if (note && note.content) {
           const listItem = document.createElement("li");
           listItem.innerHTML = `${note.title}- ${note.content}`;
           savedNotes.appendChild(listItem);

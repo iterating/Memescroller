@@ -35,9 +35,7 @@ export async function axiosInterceptor() {
     }
   );
 }
-  /**
-   * 6. Next, we'll create a progress bar to indicate the request is in progress.
-   */
+
   export function updateProgress(event) {
     const percent = (event.loaded / event.total) * 100;
     progressBar.style.width = `${percent}%`;

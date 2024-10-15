@@ -1,6 +1,6 @@
 import { axiosInterceptor, updateProgress } from "../components/loadingbar.mjs";
 import { saveNote, fetchNotes } from "../components/notesExpress.mjs";
-// import hammertime from "hammerjs";
+import { Hammer } from "hammerjs";
 
 const prevBtn = document.querySelector("#prev-img");
 const nextBtn = document.querySelector("#next-img");
@@ -11,7 +11,7 @@ const analyzeBtn = document.querySelector("#analyze-btn");
 const progressBar = document.getElementById("progressBar");
 
 let imageData = [];
-let currentIndex = 5;
+let currentIndex = 10;
 
 // Function to fetch images from Reddit
 async function getImage() {
@@ -83,7 +83,7 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-prevBtn?.addEventListener("click", () => {
+prevBtn.addEventListener("click", () => {
   if (currentIndex > 0) {
     currentIndex--;
     animematch.innerHTML = "";
@@ -91,7 +91,7 @@ prevBtn?.addEventListener("click", () => {
   }
 });
 
-nextBtn?.addEventListener("click", () => {
+nextBtn.addEventListener("click", () => {
   if (currentIndex < imageData.length - 1) {
     currentIndex++;
     animematch.innerHTML = "";
@@ -99,15 +99,19 @@ nextBtn?.addEventListener("click", () => {
   }
 });
 
-randomBtn?.addEventListener("click", () => {
+randomBtn.addEventListener("click", () => {
   if (imageData.length > 0) {
     currentIndex = Math.floor(Math.random() * imageData.length);
     animematch.innerHTML = "";
     displayImage(currentIndex);
   }
 });
-
-analyzeBtn?.addEventListener("click", searchAnime);
+// Swipe and tap events for mobile
+const hammertime = new Hammer(imageDisplay);
+hammertime.on('swipeleft', () => nextBtn.click());
+hammertime.on('swiperight', () => prevBtn.click());
+imageDisplay.addEventListener("click", () => analyzeBtn.click());
+analyzeBtn.addEventListener("click", searchAnime);
 
 // Function to search anime using backend
 async function searchAnime() {
