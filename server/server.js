@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
 const app = express();
-const port = 9000;
+// const port = 9000;
 const pastebinKey = 'l6ccuOpobsa5IisYMP37Epqsb9kP2ZuK'; 
 
 app.use(
@@ -84,32 +84,32 @@ app.get('/favorites', async (req, res) => {
   }
 });
 
-app.get("/api/search", async (req, res) => {
-  const url = req.query.url;
-  if (!url) {
-    return res.status(400).send({ error: "No URL provided" });
-  }
-  try {
-    const response = await axios.get(
-      `https://corsproxy.io/?https://api.trace.moe/search?url=${encodeURIComponent(url)}`
-    );
-    if (response === null || !response.data) {
-      return res.status(404).send({ error: "No data found" });
-    }
-    const anime = response.data.result;
-    // Send response back to client
-    res.json(anime);
-  } catch (error) {
-    console.error('Failed to retrieve data:', error);
-    if (error.response) {
-      console.error('Error response:', error.response.data);
-    }
-    res.status(500).send({ error: "Failed to retrieve data" });
-  }
-});
+// app.get("/api/search", async (req, res) => {
+//   const url = req.query.url;
+//   if (!url) {
+//     return res.status(400).send({ error: "No URL provided" });
+//   }
+//   try {
+//     const response = await axios.get(
+//       `https://corsproxy.io/?https://api.trace.moe/search?url=${encodeURIComponent(url)}`
+//     );
+//     if (response === null || !response.data) {
+//       return res.status(404).send({ error: "No data found" });
+//     }
+//     const anime = response.data.result;
+//     // Send response back to client
+//     res.json(anime);
+//   } catch (error) {
+//     console.error('Failed to retrieve data:', error);
+//     if (error.response) {
+//       console.error('Error response:', error.response.data);
+//     }
+//     res.status(500).send({ error: "Failed to retrieve data" });
+//   }
+// });
 
-app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Server listening at http://localhost:${port}`);
+// });
 
 

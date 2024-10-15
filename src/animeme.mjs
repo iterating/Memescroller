@@ -116,15 +116,13 @@ async function searchAnime(event) {
     if  (!response || !response.data) {
       throw new Error("Error: Missing response data");
     }
-    const results = response.data.result;
-
+    
     if (!results || results.length === 0) {
       throw new Error("No results found");
     }
-    // if (!response.ok) {
-    //   throw new Error("Error in response");
-    // }
-
+    
+    
+    const results = response.data.result;
     // Slice and display the top 3 results
     displayResults(results.slice(0, 3));
   } catch (err) {
