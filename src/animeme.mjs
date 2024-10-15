@@ -1,4 +1,4 @@
-import { axiosInterceptor , updateProgress} from "../components/loadingbar.mjs"
+import { axiosInterceptor, updateProgress } from "../components/loadingbar.mjs";
 import { saveNote, fetchNotes } from "../components/notes.mjs";
 const prevBtn = document.querySelector("#prev-img");
 const nextBtn = document.querySelector("#next-img");
@@ -6,6 +6,8 @@ const randomBtn = document.querySelector("#random");
 const imageDisplay = document.querySelector("#image-display");
 const animematch = document.querySelector("#animematch");
 const analyzeBtn = document.querySelector("#analyze-btn");
+const progressBar = document.getElementById("progressBar");
+
 let imageData = [];
 let currentIndex = 5;
 
@@ -19,7 +21,7 @@ async function getImage(event) {
     ];
 
     const response = await Promise.allSettled(
-      sourceUrls.map((url) => axios.get(url)) 
+      sourceUrls.map((url) => axios.get(url))
     );
 
     imageData = response[0].value.data.data.children;
@@ -99,7 +101,6 @@ analyzeBtn.addEventListener("click", searchAnime);
 
 // Function to search anime using backend
 async function searchAnime(event) {
-
   const imageUrl = imageData[currentIndex].data.url;
 
   if (!imageUrl) {
@@ -107,19 +108,19 @@ async function searchAnime(event) {
     return;
   }
   try {
-      const response = await axios.get(
-          `https://corsproxy.io/?https://api.trace.moe/search?url=${encodeURIComponent(imageUrl)}`, {onDownloadProgress: updateProgress}
-      );
-      // console.log(response.data.result);
-      if (!response || !response.data) {
-        throw new Error("Error: Missing response data");
-      }
+    const response = await axios.get(
+      `https://corsproxy.io/?https://api.trace.moe/search?url=${encodeURIComponent(imageUrl)}`,
+      { onDownloadProgress: updateProgress },
+    )
+    // console.log(response.data.result);
+    if  (!response || !response.data) {
+      throw new Error("Error: Missing response data");
+    }
+    const results = response.data.result;
 
-      const results = response.data.result;
-
-      if (!results || results.length === 0) {
-          throw new Error("No results found");
-      }
+    if (!results || results.length === 0) {
+      throw new Error("No results found");
+    }
     // if (!response.ok) {
     //   throw new Error("Error in response");
     // }
