@@ -95,15 +95,13 @@ randomBtn.addEventListener("click", () => {
 
 analyzeBtn.addEventListener("click", searchAnime);
 
-
 // Function to search anime using backend
 async function searchAnime() {
   const imageUrl = imageData[currentIndex].data.url;
-  
+
   try {
     const response = await fetch(
       `/api/search?url=${encodeURIComponent(imageUrl)}`
-      
     );
     const results = await response.json();
 
@@ -148,5 +146,4 @@ const displayResults = (results) => {
   });
   animematch.innerHTML = "";
   animematch.appendChild(fragment);
-}
-
+};

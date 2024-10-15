@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
 const app = express();
-const port = 9000;
+// const port = 9000;
 const pastebinKey = 'l6ccuOpobsa5IisYMP37Epqsb9kP2ZuK'; 
 
 app.use(
@@ -98,8 +98,8 @@ app.get("/api/search", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Server listening at http://localhost:${port}`);
+// });
 
 
