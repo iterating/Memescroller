@@ -1,14 +1,12 @@
 {
-	
 	"scripts": {
 		"start": "node ./server/server.js"
-	  },
+	},
 	"dependencies": {
 		"axios": "^1.7.7",
 		"cors": "^2.8.5",
 		"express": "^4.21.1",
 		"mime-db": "^1.53.0",
-		"serverless-http": "^2.3.2"
-
+		"serverless-http": "^2.7.0"
 	}
 }

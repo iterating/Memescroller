@@ -5,10 +5,11 @@ export async function saveNote() {
   const content = document.getElementById('note-content').value;
   const noteTitle = document.getElementById('note-title').value;
 
-  await axios.post('https://pastebin.com/api/api_post.php', {    
+  await axios.post(('https://pastebin.com/api/api_post.php'), {    
       api_paste_name: noteTitle, 
       api_paste_code: content, 
       api_dev_key: pastebinKey ,
+      api_user_key: localStorage.getItem('api-user-key') || '',
       api_option: 'paste'
   })    
   .then(response => {
@@ -24,10 +25,11 @@ export async function saveNote() {
   axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 export async function fetchNotes () {
-    const response = await axios.post('https://pastebin.com/api/api_post.php', {
+    const response =   await axios.post(('https://pastebin.com/api/api_post.php'), {    
         params: {
           api_dev_key: pastebinKey,
-          api_user_key: localStorage.getItem('api-user-key') || ''
+          api_user_key: localStorage.getItem('api-user-key') || '',
+          api_option: 'list'
         }})
     .then(response => { 
         if (!response.data) {

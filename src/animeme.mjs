@@ -1,5 +1,5 @@
 import { axiosInterceptor, updateProgress } from "../components/loadingbar.mjs";
-import { saveNote, fetchNotes } from "../components/notes.mjs";
+import { saveNote, fetchNotes } from "../components/notesExpress.mjs";
 const prevBtn = document.querySelector("#prev-img");
 const nextBtn = document.querySelector("#next-img");
 const randomBtn = document.querySelector("#random");

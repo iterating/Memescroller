@@ -1,6 +1,6 @@
 const pastebinAPI = "l6ccuOpobsa5IisYMP37Epqsb9kP2ZuK";
 
-const saveNote = () => {
+export const saveNote = () => {
   const content = document.getElementById("note-content").value;
   const noteTitle = document.getElementById("note-title").value;
 
@@ -26,7 +26,7 @@ if (document.getElementById("save-note")) {
   document.getElementById("save-note").addEventListener("click", saveNote);
 }
 
-const fetchNotes = () => {
+export const fetchNotes = () => {
   axios
     .get("/favorites")
     .then((response) => {
