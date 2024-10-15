@@ -26,11 +26,11 @@ export async function saveNote() {
 
 export async function fetchNotes () {
     const response =   await axios.post(('https://pastebin.com/api/api_post.php'), {    
-        params: {
+
           api_dev_key: pastebinKey,
           api_user_key: localStorage.getItem('api-user-key') || '',
           api_option: 'list'
-        }})
+        })
     .then(response => { 
         if (!response.data) {
             console.error('Error: Missing response data');

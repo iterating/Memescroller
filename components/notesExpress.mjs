@@ -37,18 +37,12 @@ export const fetchNotes = () => {
 
       const notes = response.data;
       const savedNotes = document.getElementById("saved-notes");
-      if (!savedNotes) {
-        console.error("Error: Missing saved-notes element");
-        return;
-      }
+   
 
       savedNotes.innerHTML = ""; // Clear previous notes
       if (notes && notes.length > 0) {
         notes.forEach((note) => {
-          if (!note || !note.url || !note.title) {
-            console.error("Error: Missing note data");
-            return;
-          }
+       
 
           const listItem = document.createElement("li");
           listItem.innerHTML = `<a href="${note.url}" target="_blank">${note.title}</a>`;

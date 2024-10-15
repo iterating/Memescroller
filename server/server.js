@@ -27,7 +27,7 @@ app.post('/notes', async (req, res) => {
     data.append('api_paste_name', api_paste_name);
     data.append('api_paste_private', '1'); // 0=public, 1=unlisted, 2=private
 
-    const response = await axios.post('https://corsproxy.io/?https://pastebin.com/api/api_post.php', data.toString(), {
+    const response = await axios.post('https://pastebin.com/api/api_post.php', {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
@@ -41,32 +41,21 @@ app.post('/notes', async (req, res) => {
     res.send({ url: response.data });
   } catch (error) {
     console.error('Failed to save note:', error);
-    if (error.response) {
-      console.error('Error response:', error.response.data);
-    }
-    res.status(500).send({ error: 'Error saving note: ' + error.message });
   }
 });
 
 // Endpoint to fetch saved notes
 app.get('/favorites', async (req, res) => {
   try {
-    const userKey = req.query.api_user_key;
-    if (!userKey) {
-      console.error('Error: Missing user key');
-      return res.status(400).send({ error: 'Missing user key' });
-    }
 
-    const response = await axios.post('https://corsproxy.io/?https://pastebin.com/api/api_post.php', {
-      params: {
-        api_dev_key: pastebinKey,
-        api_user_key: userKey
-      }
-    });
+    const response =   await axios.post(('https://pastebin.com/api/api_post.php'), {    
 
+      api_dev_key: pastebinKey,
+      api_user_key: localStorage.getItem('api-user-key') || '',
+      api_option: 'list'
+    })
     if (response === null || !response.data) {
       console.error('Error: Missing response data');
-      return res.status(500).send({ error: 'Missing response data' });
     }
 
     const notes = [];
@@ -77,10 +66,6 @@ app.get('/favorites', async (req, res) => {
     res.send(notes);
   } catch (error) {
     console.error('Failed to fetch notes:', error);
-    if (error.response) {
-      console.error('Error response:', error.response.data);
-    }
-    res.status(500).send({ error: 'Error fetching notes: ' + error.message });
   }
 });
 
