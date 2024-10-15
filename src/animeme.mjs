@@ -102,7 +102,7 @@ async function searchAnime() {
   
   try {
     const response = await fetch(
-      `http://localhost:9000/api/search?url=${encodeURIComponent(imageUrl)}`
+      `/api/search?url=${encodeURIComponent(imageUrl)}`
       
     );
     const results = await response.json();
