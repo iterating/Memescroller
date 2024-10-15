@@ -1,5 +1,6 @@
 import { axiosInterceptor, updateProgress } from "../components/loadingbar.mjs";
 import { saveNote, fetchNotes } from "../components/notesExpress.mjs";
+import hammertime from "hammerjs";
 const prevBtn = document.querySelector("#prev-img");
 const nextBtn = document.querySelector("#next-img");
 const randomBtn = document.querySelector("#random");
@@ -95,6 +96,14 @@ randomBtn.addEventListener("click", () => {
     animematch.innerHTML = "";
     displayImage(currentIndex);
   }
+  
+  const hammertime = new Hammer(imageDisplay);
+  hammertime.on('swipeleft', () => {
+    nextBtn.click();
+  });
+  hammertime.on('swiperight', () => {
+    prevBtn.click();
+  });
 });
 
 analyzeBtn.addEventListener("click", searchAnime);
