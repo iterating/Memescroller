@@ -5,7 +5,7 @@ const imageDisplay = document.querySelector("#image-display");
 const animematch = document.querySelector("#animematch");
 const analyzeBtn = document.querySelector("#analyze-btn");
 let imageData = [];
-let currentIndex = 1;
+let currentIndex = 5;
 
 // Function to fetch images from Reddit
 async function getImage() {
