@@ -3,7 +3,7 @@ export const saveNote = () => {
   const content = document.getElementById('note-content').value;
   const noteTitle = document.getElementById('note-title').value;
 
-  axios.post('http://localhost:9000/notes', { 
+  axios.post('/notes', { 
       api_paste_name: noteTitle, 
       api_paste_code: content, 
       api_dev_key: pastebinAPI 
@@ -19,7 +19,7 @@ export const saveNote = () => {
 };
 
 export const fetchNotes = () => {
-    axios.get('http://localhost:9000/favorites')
+    axios.get('/favorites')
     .then(response => {
         if (!response || !response.data) {
             console.error('Error: Missing response data');

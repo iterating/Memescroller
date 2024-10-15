@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
 const app = express();
-const port = 9000;
+// const port = 9000;
 const pastebinKey = 'l6ccuOpobsa5IisYMP37Epqsb9kP2ZuK'; 
 
 app.use(
@@ -92,7 +92,6 @@ app.get("/api/search", async (req, res) => {
     // Send response back to client
     res.status(200).json(anime);
   } catch (error) {
-    console.error(error);
     res.status(500).send({ error: "Failed to retrieve data" });
   }
 });
