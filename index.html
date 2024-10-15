@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./src/styles.css">
+    <script src="https://kit.fontawesome.com/6d5e6d9463.js" crossorigin="anonymous"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <title>Document</title>
@@ -11,25 +13,28 @@
 <body>
     <h1>App</h1>
 
-    <button id="prev-img">Previous</button>
+    <button id="prev-img">⇐  Previous</button>
     <img id="current-img" src="">
-    <button id="random">Random</button>
-    <button id="next-img">Next</button>
+    <button id="random">⇑  Random</button>
+    <button id="analyze-btn">⇓  Analyze</button>
+
+    <button id="next-img"> Next ⇒</button>
     <div id="image-display" style="width: 100vw; height: 100vh; overflow-y: scroll; max-width: 1000px; max-height: 100vw; box-sizing: border-box; margin: 0 auto;">
     </div>
     <div id="animematch" style="width: 100vw;" height="100vh"></div>
 
-
-
     <div id="notes"
     <p><h1>Note Taking </h1></p> 
-    <textarea id="note-content" rows="10" cols="50"></textarea>
+    <input type="text" id="note-title" placeholder="Note Title">
     <br>
-    <button>Save Note</button>
+    <textarea id="note-content" rows="10" cols="10" placeholder="Your note content..."></textarea>
+    <br>
+    <button id="save-note">Save Note</button>
     <h2>Saved Notes</h2>
-    <ul id="saved-notes"></ul>
+    <ul id="saved-notes" scroll style="overflow-y: scroll; max-height: 300px;"></ul>
     <div id="result"></div>
     </div>
-    <script src="./src/script.mjs"></script>
+    <script src="./src/animeme.mjs"></script>
+    <script src="./src/notes.js"></script>
     </body>
 </html>
