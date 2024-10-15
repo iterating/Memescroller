@@ -59,4 +59,5 @@ export const displayResults = (results) => {
     });
     animematch.innerHTML = "";
     animematch.appendChild(fragment);
+      resultDiv.focus();
   };
