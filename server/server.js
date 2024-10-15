@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
 const app = express();
-// const port = 9000;
+const port = 9000;
 const pastebinKey = 'l6ccuOpobsa5IisYMP37Epqsb9kP2ZuK'; 
 
 app.use(
@@ -27,13 +27,13 @@ app.post('/notes', async (req, res) => {
     data.append('api_paste_name', api_paste_name);
     data.append('api_paste_private', '1'); // 0=public, 1=unlisted, 2=private
 
-    const response = await axios.post('https://pastebin.com/api/api_post.php', data.toString(), {
+    const response = await axios.post('https://corsproxy.io/?https://pastebin.com/api/api_post.php', data.toString(), {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     });
 
-    if (!response || !response.data) {
+    if (response === null || !response.data) {
       console.error('Error: Missing response data');
       return res.status(500).send({ error: 'Missing response data' });
     }
@@ -41,6 +41,9 @@ app.post('/notes', async (req, res) => {
     res.send({ url: response.data });
   } catch (error) {
     console.error('Failed to save note:', error);
+    if (error.response) {
+      console.error('Error response:', error.response.data);
+    }
     res.status(500).send({ error: 'Error saving note: ' + error.message });
   }
 });
@@ -49,17 +52,22 @@ app.post('/notes', async (req, res) => {
 app.get('/favorites', async (req, res) => {
   try {
     const userKey = req.query.api_user_key;
-    // if (!userKey) {
-    //   console.error('Error: Missing user key');
-    //   return res.status(400).send({ error: 'Missing user key' });
-    // }
+    if (!userKey) {
+      console.error('Error: Missing user key');
+      return res.status(400).send({ error: 'Missing user key' });
+    }
 
-    const response = await axios.post('https://pastebin.com/api/api_post.php', {
+    const response = await axios.post('https://corsproxy.io/?https://pastebin.com/api/api_post.php', {
       params: {
         api_dev_key: pastebinKey,
         api_user_key: userKey
       }
     });
+
+    if (response === null || !response.data) {
+      console.error('Error: Missing response data');
+      return res.status(500).send({ error: 'Missing response data' });
+    }
 
     const notes = [];
     response.data.forEach(note => {
@@ -69,6 +77,9 @@ app.get('/favorites', async (req, res) => {
     res.send(notes);
   } catch (error) {
     console.error('Failed to fetch notes:', error);
+    if (error.response) {
+      console.error('Error response:', error.response.data);
+    }
     res.status(500).send({ error: 'Error fetching notes: ' + error.message });
   }
 });
@@ -80,18 +91,19 @@ app.get("/api/search", async (req, res) => {
   }
   try {
     const response = await axios.get(
-      `https://api.trace.moe/search?url=${encodeURIComponent(url)}`
-      
+      `https://corsproxy.io/?https://api.trace.moe/search?url=${encodeURIComponent(url)}`
     );
-    const resData = response.data;
-
-    if (!resData || !resData.result || resData.result.length === 0) {
+    if (response === null || !response.data) {
       return res.status(404).send({ error: "No data found" });
     }
-    const anime = resData.result;
+    const anime = response.data.result;
     // Send response back to client
-    res.status(200).json(anime);
+    res.json(anime);
   } catch (error) {
+    console.error('Failed to retrieve data:', error);
+    if (error.response) {
+      console.error('Error response:', error.response.data);
+    }
     res.status(500).send({ error: "Failed to retrieve data" });
   }
 });

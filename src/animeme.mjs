@@ -1,3 +1,5 @@
+import { axiosInterceptor , updateProgress} from "../components/loadingbar.mjs"
+import { saveNote, fetchNotes } from "../components/notes.mjs";
 const prevBtn = document.querySelector("#prev-img");
 const nextBtn = document.querySelector("#next-img");
 const randomBtn = document.querySelector("#random");
@@ -8,7 +10,7 @@ let imageData = [];
 let currentIndex = 5;
 
 // Function to fetch images from Reddit
-async function getImage() {
+async function getImage(event) {
   try {
     // axios get from an array of urls
     const sourceUrls = [
@@ -17,7 +19,7 @@ async function getImage() {
     ];
 
     const response = await Promise.allSettled(
-      sourceUrls.map((url) => axios.get(url))
+      sourceUrls.map((url) => axios.get(url)) 
     );
 
     imageData = response[0].value.data.data.children;
@@ -96,21 +98,32 @@ randomBtn.addEventListener("click", () => {
 analyzeBtn.addEventListener("click", searchAnime);
 
 // Function to search anime using backend
-async function searchAnime() {
+async function searchAnime(event) {
+
   const imageUrl = imageData[currentIndex].data.url;
 
+  if (!imageUrl) {
+    console.error("Error: Missing image URL");
+    return;
+  }
   try {
-    const response = await fetch(
-      `/api/search?url=${encodeURIComponent(imageUrl)}`
-    );
-    const results = await response.json();
+      const response = await axios.get(
+          `https://corsproxy.io/?https://api.trace.moe/search?url=${encodeURIComponent(imageUrl)}`, {onDownloadProgress: updateProgress}
+      );
+      // console.log(response.data.result);
+      if (!response || !response.data) {
+        throw new Error("Error: Missing response data");
+      }
 
-    if (!results || results.length === 0) {
-      throw new Error("No results found");
-    }
-    if (!response.ok) {
-      throw new Error("Error in response");
-    }
+      const results = response.data.result;
+
+      if (!results || results.length === 0) {
+          throw new Error("No results found");
+      }
+    // if (!response.ok) {
+    //   throw new Error("Error in response");
+    // }
+
     // Slice and display the top 3 results
     displayResults(results.slice(0, 3));
   } catch (err) {
@@ -126,6 +139,9 @@ const displayResults = (results) => {
   }
   const fragment = document.createDocumentFragment();
   results.forEach((anime) => {
+    if (!anime) {
+      return;
+    }
     const resultDiv = document.createElement("div");
     resultDiv.classList.add("result");
     resultDiv.innerHTML = `
@@ -147,3 +163,8 @@ const displayResults = (results) => {
   animematch.innerHTML = "";
   animematch.appendChild(fragment);
 };
+document.getElementById("save-note").addEventListener("click", saveNote);
+
+fetchNotes();
+
+axiosInterceptor();

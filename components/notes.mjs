@@ -1,16 +1,19 @@
 
-export const saveNote = () => {
+const pastebinKey = "l6ccuOpobsa5IisYMP37Epqsb9kP2ZuK";
+
+export async function saveNote() {
   const content = document.getElementById('note-content').value;
   const noteTitle = document.getElementById('note-title').value;
 
-  axios.post('/notes', { 
+  await axios.post('https://pastebin.com/api/api_post.php', {    
       api_paste_name: noteTitle, 
       api_paste_code: content, 
-      api_dev_key: pastebinAPI 
-  })
+      api_dev_key: pastebinKey ,
+      api_option: 'paste'
+  })    
   .then(response => {
       document.getElementById('result').innerHTML = `Note saved: <a href="${response.data.url}" target="_blank">${response.data.url}</a>`;
-      localStorage.setItem('api-user-key', pastebinAPI);
+      localStorage.setItem('api-user-key', userKey);
       fetchNotes();
   })
   .catch(error => {
@@ -18,14 +21,19 @@ export const saveNote = () => {
   });
 };
 
-export const fetchNotes = () => {
-    axios.get('/favorites')
-    .then(response => {
-        if (!response || !response.data) {
+  axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
+export async function fetchNotes () {
+    const response = await axios.post('https://pastebin.com/api/api_post.php', {
+        params: {
+          api_dev_key: pastebinKey,
+          api_user_key: localStorage.getItem('api-user-key') || ''
+        }})
+    .then(response => { 
+        if (!response.data) {
             console.error('Error: Missing response data');
             return;
         }
-
         const notes = response.data;
         const savedNotes = document.getElementById('saved-notes');
         if (!savedNotes) {
