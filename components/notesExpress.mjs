@@ -1,4 +1,3 @@
-const pastebinAPI = "l6ccuOpobsa5IisYMP37Epqsb9kP2ZuK";
 const savedNotes = document.getElementById("saved-notes");
 
 export async function saveNote() {
@@ -9,10 +8,7 @@ export async function saveNote() {
     return;
   }
   try {
-    const response = await axios.get("/notes", {
-      api_paste_name: noteTitle,
-      api_paste_code: content,
-    });
+    const response = await axios.post("/notes");
     if (!response || !response.data) {
       console.error("Error: Missing response data");
       return;
@@ -22,6 +18,7 @@ export async function saveNote() {
     fetchNotes();
   } catch (error) {
     console.error("Error:", error);
+    /// If cannot get pastebin, save last note from localstorage
     localStorage.setItem("lastNote", JSON.stringify({
       title: noteTitle,
       content: content,
@@ -45,7 +42,7 @@ export async function fetchNotes() {
       const lastNote = JSON.parse(localStorage.getItem("lastNote"));
       if (lastNote) {
         const listItem = document.createElement("li");
-        listItem.innerHTML = `<a href="${lastNote.url}" target="_blank">${lastNote.title}</a>`;
+        listItem.innerHTML = `${lastNote.title}- ${lastNote.content}`;
         savedNotes.appendChild(listItem);
       }
     }
@@ -63,14 +60,14 @@ export async function fetchNotes() {
     }
   } catch (error) {
     console.error("Error:", error);
-    
+    /// If cannot get pastebin, save last note from localstorage
     const lastNote = localStorage.getItem("lastNote");
     if (lastNote) {
       try {
         const note = JSON.parse(lastNote);
         if (note && note.title && note.content) {
           const listItem = document.createElement("li");
-          listItem.innerHTML = `<a href="" target="_blank">${note.title}</a>`;
+          listItem.innerHTML = `${note.title}- ${note.content}`;
           savedNotes.appendChild(listItem);
         } 
       } catch (error) {
