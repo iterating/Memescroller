@@ -21,12 +21,12 @@ let sourceUrls = [
 document.querySelector("#toggle-slider").addEventListener("change", (e) => {
     if (e.target.checked) {
     sourceUrls = [
-      "https://www.reddit.com/r/animemes.json?limit=400",
+      "https://www.reddit.com/r/animemes.json?limit=200",
       "https://www.reddit.com/r/goodanimemes.json?limit=600",
       "https://www.reddit.com/r/wholesomeanimemes.json?limit=400",
       "https://www.reddit.com//r/AnimeMeme.json?limit=100",
-      "https://www.reddit.com/r/anime_irl.json?limit=300",
-      "https://www.reddit.com/r/animememes.json?limit=70",
+      // "https://www.reddit.com/r/anime_irl.json?limit=300",
+      // "https://www.reddit.com/r/animememes.json?limit=70",
     ];
     } else {
     sourceUrls = [
