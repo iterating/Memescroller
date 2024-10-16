@@ -13,22 +13,22 @@ let imageData = [];
 let currentIndex = 10;
 
 let sourceUrls = [
-  "https://www.reddit.com/r/animescreenshots.json?limit=250",
-  "https://www.reddit.com/r/animescenery.json?limit=250",
-  // "https://www.reddit.com/r/Animewallpaper.json?limit=200",
+  "https://www.reddit.com/r/animescreenshots.json?limit=400",
+  "https://www.reddit.com/r/animescenery.json?limit=600",
+  // "https://www.reddit.com/r/Animewallpaper.json?limit=70",
 ];
 
 document.querySelector("#toggle-slider").addEventListener("change", (e) => {
     if (e.target.checked) {
     sourceUrls = [
-      "https://www.reddit.com/r/animemes.json?limit=200",
-      "https://www.reddit.com/r/anime_irl.json?limit=200",
+      "https://www.reddit.com/r/animemes.json?limit=400",
+      "https://www.reddit.com/r/anime_irl.json?limit=400",
       "https://www.reddit.com/r/animememes.json?limit=70",
     ];
     } else {
     sourceUrls = [
-      "https://www.reddit.com/r/animescreenshots.json?limit=250",
-      "https://www.reddit.com/r/animescenery.json?limit=250",
+      "https://www.reddit.com/r/animescreenshots.json?limit=400",
+      "https://www.reddit.com/r/animescenery.json?limit=600",
       // "https://www.reddit.com/r/Animewallpaper.json?limit=200"
       ];
       
@@ -56,10 +56,6 @@ async function getImage() {
     //randomize the order of images in the array
     imageData.sort(() => Math.random() - 0.5);
 
-  //start at random image
-  currentIndex = Math.floor(Math.random() * imageData.length);
-  displayImage(currentIndex);
-  
 }
 
       window.addEventListener("DOMContentLoaded", getImage);

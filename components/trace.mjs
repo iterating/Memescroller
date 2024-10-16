@@ -25,12 +25,10 @@ export async function searchAnime() {
         throw new Error("No results found");
       }
       
-      
-    } catch (err) {
-      console.error("Error:", err);
-      alert("Failed to retrieve data");
-    }
+    } catch(err) {
+      console.error("Error in retrieving data", err);
   }
+}
   
   // Function to display results
 export const displayResults = (results) => {
