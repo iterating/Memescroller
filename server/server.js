@@ -4,7 +4,7 @@ const axios = require("axios");
 const serverless = require('serverless-http');
 
 const app = express();
-const port = process.env.PORT || 5500;
+// const port = process.env.PORT || 5500;
 const pastebinKey = 'l6ccuOpobsa5IisYMP37Epqsb9kP2ZuK';
 
 app.use(cors({ origin: "*" }));
@@ -66,8 +66,8 @@ app.get('/favorites', async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Server listening at http://localhost:${port}`);
+// });
 
-// module.exports.handler = serverless(app);
+module.exports.handler = serverless(app);
