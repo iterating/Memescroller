@@ -180,13 +180,13 @@ async function searchAnime() {
   }
   try {
     const response = await axios.get(
-      `https://corsproxy.io/?https://api.trace.moe/search?url=${encodeURIComponent(
+      `https://api.trace.moe/search?anilistInfo&url=${encodeURIComponent(
         imageUrl
       )}`,
       { onDownloadProgress: updateProgress }
     );
 
-    const results = response?.data?.result;
+    const results =  response.data.result.filter(result => !result.anilist.isAdult);    
     if (results && results.length > 0) {
       displayResults(results.slice(0, 3));
     } else {
@@ -200,13 +200,14 @@ async function searchAnime() {
 
 // Function to display results
 const displayResults = (results) => {
-  if (!results || results.length === 0) {
+  const filteredResults = results.filter(result => !result.anilist.isAdult);
+  if (!filteredResults || filteredResults.length === 0) {
     return;
   }
+  console.log(filteredResults);
   const fragment = document.createDocumentFragment();
-  results.forEach((anime) => {
+  filteredResults.forEach((anime) => {
     if (!anime) return;
-
     const resultDiv = document.createElement("div");
     resultDiv.classList.add("result");
     resultDiv.innerHTML = `
