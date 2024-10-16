@@ -16,7 +16,7 @@ export async function searchAnime() {
       }
       const results = response.data.result;
       // Slice and display the top 3 results
-      displayResults(results.slice(0, 3));
+      displayResults(results.slice(0, 3));      
       
       if (!results || results.length === 0) {
         throw new Error("No results found");
@@ -59,5 +59,4 @@ export const displayResults = (results) => {
     });
     animematch.innerHTML = "";
     animematch.appendChild(fragment);
-      resultDiv.focus();
   };

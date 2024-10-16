@@ -1,6 +1,6 @@
 import { axiosInterceptor, updateProgress } from "../components/loadingbar.mjs";
 import { saveNote, fetchNotes } from "../components/notesExpress.mjs";
-import { Hammer } from "hammerjs";
+
 
 const prevBtn = document.querySelector("#prev-img");
 const nextBtn = document.querySelector("#next-img");
@@ -110,6 +110,8 @@ randomBtn.addEventListener("click", () => {
 const hammertime = new Hammer(imageDisplay);
 hammertime.on('swipeleft', () => nextBtn.click());
 hammertime.on('swiperight', () => prevBtn.click());
+hammertime.on('swipeup', () => randomBtn.click());
+hammertime.on('swipedown', () => analyzeBtn.click());
 imageDisplay.addEventListener("click", () => analyzeBtn.click());
 analyzeBtn.addEventListener("click", searchAnime);
 
