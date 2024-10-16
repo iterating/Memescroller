@@ -15,7 +15,9 @@ export async function getImage() {
       imageData = response[0].value.data.data.children;
       if (imageData && imageData.length > 0) {
         displayImage(currentIndex);
+        
       }
+      
     } catch (err) {
       console.error(err);
       alert("Error fetching data from Reddit");
@@ -28,5 +30,6 @@ export async function getImage() {
       imageDisplay.style.backgroundPosition = "center";
       imageDisplay.style.backgroundSize = "contain";
       imageDisplay.style.backgroundImage = `url(${imageData[index].data.url})`;
+      
     }
   }
