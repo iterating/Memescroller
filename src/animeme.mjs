@@ -13,23 +13,23 @@ let imageData = [];
 let currentIndex = 10;
 
 let sourceUrls = [
-  "https://www.reddit.com/r/animescreenshots/hot/.json?limit=200",
-  "https://www.reddit.com/r/animescenery/hot/.json?limit=200",
-  "https://www.reddit.com/r/Animewallpaper/hot/.json?limit=200",
+  "https://www.reddit.com/r/animescreenshots.json?limit=250",
+  "https://www.reddit.com/r/animescenery.json?limit=250",
+  // "https://www.reddit.com/r/Animewallpaper.json?limit=200",
 ];
 
 document.querySelector("#toggle-slider").addEventListener("change", (e) => {
     if (e.target.checked) {
     sourceUrls = [
-      "https://www.reddit.com/r/animemes/hot/.json?limit=200",
-      "https://www.reddit.com/r/anime_irl/hot/.json?limit=200",
-      "https://www.reddit.com/r/animememes/hot/.json?limit=70",
+      "https://www.reddit.com/r/animemes.json?limit=200",
+      "https://www.reddit.com/r/anime_irl.json?limit=200",
+      "https://www.reddit.com/r/animememes.json?limit=70",
     ];
     } else {
     sourceUrls = [
-      "https://www.reddit.com/r/animescreenshots/hot/.json?limit=200",
-      "https://www.reddit.com/r/animescenery/hot/.json?limit=200",
-      "https://www.reddit.com/r/Animewallpaper/hot/.json?limit=200"
+      "https://www.reddit.com/r/animescreenshots.json?limit=250",
+      "https://www.reddit.com/r/animescenery.json?limit=250",
+      // "https://www.reddit.com/r/Animewallpaper.json?limit=200"
       ];
       
     }
