@@ -58,7 +58,7 @@ async function getImage() {
 
 }
 
-      window.addEventListener("DOMContentLoaded", getImage);
+getImage().then(() => displayImage(currentIndex));
 
 // Function to display image based on index
 function displayImage(index) {
