@@ -51,6 +51,11 @@ body {
 #toggle-slider:checked:before {
   left: 22px;
 }
+label {
+  font-size: 0.6rem;
+  color: #fff;
+  margin-right: 5px;
+}
 #image-display {
   display: flex;
   justify-content: center;
