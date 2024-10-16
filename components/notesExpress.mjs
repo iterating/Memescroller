@@ -42,7 +42,7 @@ export async function fetchNotes() {
       const lastNote = JSON.parse(localStorage.getItem("lastNote"));
       if (lastNote) {
         const listItem = document.createElement("li");
-        listItem.textContent = `${lastNote.title}<br>${lastNote.content}`;
+        listItem.textContent = `${lastNote.title}-${lastNote.content}`;
         savedNotes.appendChild(listItem);
       }
     }
@@ -67,7 +67,7 @@ export async function fetchNotes() {
         const note = JSON.parse(lastNote);
         if (note && note.content) {
           const listItem = document.createElement("li");
-          listItem.textContent = `${note.title}<br>${note.content}`;
+          listItem.textContent = `${note.title}-${note.content}`;
           savedNotes.appendChild(listItem);
         } 
       } catch (error) {

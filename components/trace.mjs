@@ -9,14 +9,17 @@ export async function searchAnime() {
       const response = await axios.get(
         `https://corsproxy.io/?https://api.trace.moe/search?url=${encodeURIComponent(imageUrl)}`,
         { onDownloadProgress: updateProgress },
+        
       )
       // console.log(response.data.result);
       if  (!response || !response.data) {
         throw new Error("Error: Missing response data");
       }
       const results = response.data.result;
+      //filter out nsfw results
+      const filteredResults = results.filter((result) => !result.nsfw);
       // Slice and display the top 3 results
-      displayResults(results.slice(0, 3));      
+      displayResults(filteredResults.slice(0, 3));      
       
       if (!results || results.length === 0) {
         throw new Error("No results found");

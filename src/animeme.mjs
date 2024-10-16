@@ -1,7 +1,6 @@
 import { axiosInterceptor, updateProgress } from "../components/loadingbar.mjs";
 import { saveNote, fetchNotes } from "../components/notesExpress.mjs";
 
-
 const prevBtn = document.querySelector("#prev-img");
 const nextBtn = document.querySelector("#next-img");
 const randomBtn = document.querySelector("#random");
@@ -13,36 +12,62 @@ const progressBar = document.getElementById("progressBar");
 let imageData = [];
 let currentIndex = 10;
 
+let sourceUrls = [
+  "https://www.reddit.com/r/animescreenshots/hot/.json?limit=200",
+  "https://www.reddit.com/r/animescenery/hot/.json?limit=200",
+  "https://www.reddit.com/r/Animewallpaper/hot/.json?limit=200",
+];
+
+document.querySelector("#toggle-slider").addEventListener("change", (e) => {
+    if (e.target.checked) {
+    sourceUrls = [
+      "https://www.reddit.com/r/animemes/hot/.json?limit=200",
+      "https://www.reddit.com/r/anime_irl/hot/.json?limit=200",
+      "https://www.reddit.com/r/animememes/hot/.json?limit=70",
+    ];
+    } else {
+    sourceUrls = [
+      "https://www.reddit.com/r/animescreenshots/hot/.json?limit=200",
+      "https://www.reddit.com/r/animescenery/hot/.json?limit=200",
+      "https://www.reddit.com/r/Animewallpaper/hot/.json?limit=200"
+      ];
+      
+    }
+    getImage();
+  });
+
 // Function to fetch images from Reddit
 async function getImage() {
-  try {
-    const sourceUrls = [
-      "https://www.reddit.com/r/animemes/hot/.json?limit=500",
-      "https://www.reddit.com/r/animememes/hot/.json?limit=500",
-    ];
+  const responses = await Promise.allSettled(
+    sourceUrls.map((url) => axios.get(url))
+    
+  );
+  const data = responses
+    .filter((res) => res.status === "fulfilled")
+    .flatMap((res) => res.value.data.data.children);
+  imageData = data
+    //regex filter ending with image format
+    .filter((post) => /\.(jpg|png|gif|webp)$/i.test(post.data.url) 
+    //regex filter out nsfw  
+    && !/\/nsfw\//i.test(post.data.url)
+    //regex filter out i.imgur.com
+    && !/i\.imgur\.com/i.test(post.data.url))
+    .map((post) => post.data.url);
+    //randomize the order of images in the array
+    imageData.sort(() => Math.random() - 0.5);
 
-    const response = await Promise.allSettled(
-      sourceUrls.map((url) => axios.get(url))
-    );
-
-    const redditData = response.find(res => res.status === 'fulfilled');
-    imageData = redditData?.value?.data?.data?.children || [];
-    if (imageData.length > 0) {
-      displayImage(currentIndex);
-    } else {
-      console.warn("No images found in the fetched data.");
-    }
-  } catch (err) {
-    console.error("Error fetching data from Reddit:", err);
-    alert("Error fetching data from Reddit");
-  }
+  //start at random image
+  currentIndex = Math.floor(Math.random() * imageData.length);
+  displayImage(currentIndex);
+  
 }
 
-window.addEventListener("DOMContentLoaded", getImage);
+      window.addEventListener("DOMContentLoaded", getImage);
 
 // Function to display image based on index
 function displayImage(index) {
-  const imageUrl = imageData[index]?.data?.url;
+  const imageUrl = imageData[index];
+  
   if (imageUrl) {
     imageDisplay.style.backgroundRepeat = "no-repeat";
     imageDisplay.style.backgroundPosition = "center";
@@ -108,23 +133,25 @@ randomBtn.addEventListener("click", () => {
 });
 // Swipe and tap events for mobile
 const hammertime = new Hammer(imageDisplay);
-hammertime.on('swipeleft', () => nextBtn.click());
-hammertime.on('swiperight', () => prevBtn.click());
-hammertime.on('swipeup', () => randomBtn.click());
-hammertime.on('swipedown', () => analyzeBtn.click());
+hammertime.on("swipeleft", () => nextBtn.click());
+hammertime.on("swiperight", () => prevBtn.click());
+hammertime.on("swipeup", () => randomBtn.click());
+hammertime.on("swipedown", () => analyzeBtn.click());
 imageDisplay.addEventListener("click", () => analyzeBtn.click());
 analyzeBtn.addEventListener("click", searchAnime);
 
 // Function to search anime using backend
 async function searchAnime() {
-  const imageUrl = imageData[currentIndex]?.data?.url;
+  const imageUrl = imageData[currentIndex];
   if (!imageUrl) {
     console.error("Error: Missing image URL");
     return;
   }
   try {
     const response = await axios.get(
-      `https://corsproxy.io/?https://api.trace.moe/search?url=${encodeURIComponent(imageUrl)}`,
+      `https://corsproxy.io/?https://api.trace.moe/search?url=${encodeURIComponent(
+        imageUrl
+      )}`,
       { onDownloadProgress: updateProgress }
     );
 
@@ -175,4 +202,3 @@ document.getElementById("save-note")?.addEventListener("click", saveNote);
 
 axiosInterceptor();
 fetchNotes();
-
