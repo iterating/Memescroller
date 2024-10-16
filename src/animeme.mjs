@@ -139,6 +139,38 @@ hammertime.on("swipedown", () => analyzeBtn.click());
 imageDisplay.addEventListener("click", () => analyzeBtn.click());
 analyzeBtn.addEventListener("click", searchAnime);
 
+// ⇐ ⇒ ⇐ ⇒ ⇑ ⇓ ⇑
+let sequence = ["ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"];
+let currentSequenceIndex = 0;
+let intervalSlideshow = null;
+
+document.addEventListener("keydown", (e) => {
+  if (intervalSlideshow) {
+    clearInterval(intervalSlideshow);
+    intervalSlideshow = null;
+  }
+
+  if (sequence[currentSequenceIndex] === e.key) {
+    currentSequenceIndex++;
+
+    if (currentSequenceIndex === sequence.length) {
+      const codeAccepted = document.createElement("p");
+      codeAccepted.textContent = "Code accepted";
+      codeAccepted.style.position = "fixed";
+      codeAccepted.style.top = "50%";
+      codeAccepted.style.left = "50%";
+      codeAccepted.style.transform = "translate(-50%, -50%)";
+      codeAccepted.style.fontSize = "3rem";
+      codeAccepted.style.color = "white";
+      document.body.appendChild(codeAccepted);
+      setTimeout(() => codeAccepted.remove(), 1500);
+      intervalSlideshow = setInterval(() => nextBtn.click(), 3000);
+    }
+  } else {
+    currentSequenceIndex = 0;
+  }
+});
+
 // Function to search anime using backend
 async function searchAnime() {
   const imageUrl = imageData[currentIndex];

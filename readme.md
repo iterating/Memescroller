@@ -8,16 +8,17 @@ Click on a picture to get details of which anime and episode the scene is from. 
 
 Click the toggle to switch to meme mode. 
 
+← → ← → ↓ ↑ for easter egg
+
 ## Design
 I used Axios to access trace.moe, reddit, and pastebin APIs to power this app. Array filter methods and regex were used to power the logic in organizing and processing the data.   
 Hammerjs was utilized for swipe navigation.  
 
 A express.js backend was hosted with netlify due to CORS issues with external APIs. The backend has the notes, favorites, and search API endpoints that are accessed by axios from the server. Error handling diagnoses possible failure points in the app for easier troubleshooting. localStorage is used to save notes data across sessions in case of disruptions in the Pastebin API. 
 
-Reddit API was used as an interesting example of a crowdsourced, crowd structured database
+Reddit API was used as an interesting example of a crowdsourced, crowd structured database. As a result of the crowdsourced nature, there is a risk of memes of questionable taste appearing on the app. 
 DocumentFragment and DOM methods are used to build content.
-
-Asynchronous functions are used to keep an engaging user flow. 
+Asynchronous functions were applied to keep an engaging user flow. 
 
 Mobile first UX design ensures tactile enjoyment and an engaging expereince on any device cabable of running a compatible web browser. 
 
