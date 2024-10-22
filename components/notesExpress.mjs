@@ -15,7 +15,6 @@ export async function saveNote() {
       api_paste_name: noteTitle,
       api_paste_code: content,
     });
-    console.log(response.data);
     if (!response || !response.data) {
       console.error("Error: Missing response data");
       return;

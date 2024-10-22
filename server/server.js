@@ -13,12 +13,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.get("/", (req, res) => {
   console.log("Received GET request");
-
-  res.send("Hello World!");
+  res.send("Memescroll Server is Up");
 });
 
 app.post("/notes", async (req, res) => {
-  console.log("Received  request to /notes");
+  // console.log("Received  request to /notes");
   try {
     const response = await axios.post(
       "https://pastebin.com/api/api_post.php",
@@ -47,7 +46,7 @@ app.post("/notes", async (req, res) => {
 });
 
 app.get("/favorites", async (req, res) => {
-  console.log("Received  request to /favorites");
+  // console.log("Received  request to /favorites");
 
   try {
     // const response = await axios.post(

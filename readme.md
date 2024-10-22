@@ -18,10 +18,14 @@ Hammerjs was utilized for swipe navigation.
 Express.js backend was hosted with netlify due to CORS issues with external APIs. The backend has the notes, favorites, and search API endpoints that are accessed by axios from the server. Error handling diagnoses possible failure points in the app for easier troubleshooting. localStorage is used to save notes data across sessions in case of disruptions in the Pastebin API. 
 
 Reddit API was used as an interesting example of a crowdsourced, crowd structured database. As a result of the crowdsourced nature, there is a risk of memes of questionable taste appearing on the app. 
+
+Due to limitations of the Pastebin API, the Pastebin note saving will not work if used past a certain amount of times a day. The localStorage backup is then used to save your notes. 
+
 DocumentFragment and DOM methods are used to build content.
 Asynchronous functions were applied to keep an engaging user flow. 
 
 Mobile first UX design ensures tactile enjoyment and an engaging expereince on any device cabable of running a compatible web browser. 
+
 
 **Objectives**
 
