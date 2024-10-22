@@ -24,8 +24,7 @@ document.querySelector("#toggle-slider").addEventListener("change", (e) => {
       "https://www.reddit.com/r/animemes.json?limit=200",
       "https://www.reddit.com/r/goodanimemes.json?limit=600",
       "https://www.reddit.com/r/wholesomeanimemes.json?limit=400",
-      "https://www.reddit.com//r/AnimeMeme.json?limit=100",
-      // "https://www.reddit.com/r/anime_irl.json?limit=300",
+\      // "https://www.reddit.com/r/anime_irl.json?limit=300",
       // "https://www.reddit.com/r/animememes.json?limit=70",
     ];
     } else {
@@ -164,7 +163,7 @@ document.addEventListener("keydown", (e) => {
       codeAccepted.style.color = "white";
       document.body.appendChild(codeAccepted);
       setTimeout(() => codeAccepted.remove(), 1500);
-      intervalSlideshow = setInterval(() => nextBtn.click(), 3000);
+      intervalSlideshow = setInterval(() => nextBtn.click(), 2500);
     }
   } else {
     currentSequenceIndex = 0;
@@ -204,7 +203,7 @@ const displayResults = (results) => {
   if (!filteredResults || filteredResults.length === 0) {
     return;
   }
-  console.log(filteredResults);
+  // console.log(filteredResults);
   const fragment = document.createDocumentFragment();
   filteredResults.forEach((anime) => {
     if (!anime) return;

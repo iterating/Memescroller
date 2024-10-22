@@ -25,7 +25,8 @@ export async function saveNote() {
   axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 export async function fetchNotes () {
-    const response =   await axios.post(('https://pastebin.com/api/api_post.php'), {    
+  // Pastbin API says use POST
+    await axios.post(('https://pastebin.com/api/api_post.php'), {    
 
           api_dev_key: pastebinKey,
           api_user_key: localStorage.getItem('api-user-key') || '',
