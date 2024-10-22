@@ -165,6 +165,7 @@ document.addEventListener("keydown", (e) => {
       document.body.appendChild(codeAccepted);
       setTimeout(() => codeAccepted.remove(), 1500);
       intervalSlideshow = setInterval(() => nextBtn.click(), 2500);
+      intervalSlideshow = setInterval(() => nextBtn.click(), 2500);
     }
   } else {
     currentSequenceIndex = 0;
@@ -204,6 +205,7 @@ const displayResults = (results) => {
   if (!filteredResults || filteredResults.length === 0) {
     return;
   }
+  // console.log(filteredResults);
   // console.log(filteredResults);
   const fragment = document.createDocumentFragment();
   filteredResults.forEach((anime) => {
