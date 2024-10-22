@@ -1,6 +1,7 @@
-[App link](https://animeme-scroller.netlify.app/)
+[App Link](iterating.github.io/308.sba)
 
-[Github pages](iterating.github.com/308.sba)
+[Netlify Link](https://animeme-scroller.netlify.app/)
+
 ## Animeme
 Swipe through beautiful anime screenshots and scenery or anime memes. Use the arrow buttons or swipe movements to navigate.
 
