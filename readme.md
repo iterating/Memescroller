@@ -1,4 +1,4 @@
-[App Link](iterating.github.io/308.sba)
+[App Link](iterating.github.io/memescroller)
 
 [Netlify Link](https://animeme-scroller.netlify.app/)
 
