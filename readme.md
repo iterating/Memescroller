@@ -2,7 +2,7 @@
 
 [Netlify Link](https://animeme-scroller.netlify.app/)
 
-## Animeme
+## Memescroller
 Swipe through beautiful anime screenshots and scenery or anime memes. Use the arrow buttons or swipe movements to navigate.
 
 Click on a picture to get details of which anime and episode the scene is from. Press a button to save this information to a note to save or share. 
