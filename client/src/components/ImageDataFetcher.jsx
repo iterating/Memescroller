@@ -22,6 +22,7 @@ const fetchImageUrls = async (urls) => {
             url.includes("https://i.redd.it")
         )
     )
+    .sort(() => 0.5 - Math.random())
 }
 
 const ImageDataFetcher = () => {

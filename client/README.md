@@ -1,6 +1,6 @@
 [Source Link](https://github.com/iterating/Memescroller)
 
-[Netlify Link](https://animeme-scroller.netlify.app/)
+[Netlify Link](https://memescroller.netlify.app//)
 
 ## Memescroller
 - Swipe through beautiful anime screenshots and scenery or anime memes. Use the arrow buttons or swipe movements to navigate.
