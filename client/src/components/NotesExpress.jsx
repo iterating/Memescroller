@@ -85,5 +85,8 @@ export async function fetchNotes() {
     console.error("Error:", error);
 
   }
+
+
 }
 
+export default fetchNotes;

@@ -1,6 +1,6 @@
-const express = require("express");
-const cors = require("cors");
-const axios = require("axios");
+import express from "express";
+import cors from "cors";
+import axios from "axios";
 // const serverless = require("serverless-http");
 
 const app = express();
@@ -105,4 +105,4 @@ app.listen(PORT, () => {
 
 // module.exports.handler = serverless(app);
 
-module.exports = app;
+export default app;
