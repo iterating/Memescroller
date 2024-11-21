@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { searchAnime } from "../utils/searchAnime";
+import { searchAnime } from "../../utils/searchAnime";
 
 const AnalyzeButton = ({ index, imageData, setResults }) => {
   const [loading, setLoading] = useState(false);

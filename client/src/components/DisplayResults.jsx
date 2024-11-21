@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const DisplayResults = ({ results = [] }) => {
   console.log("DisplayResults");
 
-  // no results
+  // no rsults
   if (results.length === 0) {
     return <div>No results found</div>;
   }
@@ -21,7 +21,7 @@ const DisplayResults = ({ results = [] }) => {
   return (
     <div className="results">
       {results.map((anime) => (
-        <div key={`${anime.filename}-${anime.episode}`} className="result">
+        <div key={anime.filename} className="result">
           <h2>{anime.filename}</h2>
           <p>Episode: {anime.episode}</p>
           
@@ -41,21 +41,17 @@ const DisplayResults = ({ results = [] }) => {
       ))}
 
       <div className="note-container">
-        <label htmlFor="note-content">Notes:</label>
+      <label htmlFor="note-content">Notes:</label>
+
         <textarea
           id="note-content"
           value={noteContent}
           onChange={(e) => setNoteContent(e.target.value)}
           rows={5}
           cols={40}
-          placeholder="Add your notes here..."
+          placeholder="Add your notes here"
+
         />
-        <button
-          type="button"
-          onClick={() => setNoteContent("")}
-        >
-          Clear Notes
-        </button>
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ const ToggleSlider = () => {
         payload: [
           "https://www.reddit.com/r/animemes.json?limit=200",
           "https://www.reddit.com/r/goodanimemes.json?limit=600",
-          "https://www.reddit.com/r/wholesomeanimemes.json?limit=400",
+          "https://www.reddit.com/r/wholesomeanimemes.json?limit=600",
         ],
       });
     } else {

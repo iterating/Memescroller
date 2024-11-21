@@ -23,7 +23,14 @@ const ImageDataFetcher = () => {
         const data = responses
           .filter((res) => res.status === "fulfilled")
           .flatMap((res) =>
-            res.value.data.data.children.map((child) => child.data.url)
+            res.value.data.data.children
+              .map((child) => child.data.url)
+              //filter out non-image urls
+              .filter((url) => /\.(jpg|png|gif|webp)$/i.test(url) 
+              //filter out nsfw
+              && !/\/nsfw\//i.test(url) && url
+                .includes("https://i.redd.it")
+              )
           );
 
         dispatch({ type: "SET_IMAGE_DATA", payload: data });
