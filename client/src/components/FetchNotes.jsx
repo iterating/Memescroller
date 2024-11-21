@@ -1,54 +1,41 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
+import axios from "axios";
+const apiUrl = 'http://localhost:3000';
 
 const FetchNotes = () => {
-  console.log("FetchNotes");
-
-  // Initialize notes state as an empty array
-  const [notes, setNotes] = useState([]);
   const savedNotesRef = useRef(null);
+  const [notes, setNotes] = React.useState([]);
 
   useEffect(() => {
-    console.log("FetchNotes useEffect");
-
-    const fetchNotes = async () => {
+    const getLastNote = async () => {
       try {
         const lastNote = localStorage.getItem("lastNote");
-        
-        // If lastNote exists in localStorage, parse it and add it to notes state
         if (lastNote) {
-          try {
-            const note = JSON.parse(lastNote);
-            if (note && note.content) {
-              setNotes((prevNotes) => [...prevNotes, note]);
-            }
-          } catch (error) {
-            console.error("Error: Could not parse last note data:", error);
-          }
-        }
-
-        // Optional: Clear any previous notes in savedNotesRef
-        if (savedNotesRef.current) {
-          savedNotesRef.current.innerHTML = ""; // Clear previous notes
-        }
-
-        // Fetch notes from localStorage if saved in previous sessions
-        if (savedNotesRef.current && !savedNotesRef.current.firstChild) {
-          const lastNote = JSON.parse(localStorage.getItem("lastNote"));
-          if (lastNote) {
-            setNotes([lastNote]);
-          }
+          setNotes([JSON.parse(lastNote)]);
         }
       } catch (error) {
-        console.error("Error:", error);
+        console.error("Error: Could not parse last note data:", error);
       }
     };
+    getLastNote();
+  }, []);
 
+  useEffect(() => {
+    const fetchNotes = async () => {
+      const response = await axios.get(`${apiUrl}/favorites`);
+      if (response && response.data) {
+        setNotes(response.data);
+      } else {
+        console.error("Error: Missing response data");
+      }
+    };
     fetchNotes();
   }, []);
 
   const handleDrop = (event) => {
     event.preventDefault();
     const data = event.dataTransfer.getData("text");
+    localStorage.setItem("lastNote", JSON.stringify({ content: data }));
     setNotes((prevNotes) => [...prevNotes, { content: data }]);
   };
 
@@ -64,9 +51,7 @@ const FetchNotes = () => {
       style={{ padding: "1rem" }}
     >
       {notes.map((note) => (
-        <li key={`${note.title}-${note.content}`}>
-          {note.content}
-        </li>
+        <li key={`${note.title}-${note.content}`} style={{ maxWidth: "600px" }}>{note.content}</li>
       ))}
     </ul>
   );

@@ -1,28 +1,28 @@
 import React, { useState } from "react";
+import "../styles.css";
+import { useDispatch } from "react-redux";
+import { SaveNoteButton } from "./buttons";
 
 const DisplayResults = ({ results = [] }) => {
-  console.log("DisplayResults");
+  const dispatch = useDispatch();
+  const [noteContent, setNoteContent] = useState("");
 
-  // no rsults
   if (results.length === 0) {
     return <div>No results found</div>;
   }
 
-  // Local state to manage the note content
-  const [noteContent, setNoteContent] = useState("");
-
   // Handle adding note content
   const handleAddNote = (anime) => {
-    setNoteContent((prevContent) => {
-      return `${prevContent}\n${anime.filename} - Episode ${anime.episode}\n`;
-    });
+    const newContent = `${anime.filename} - Episode ${anime.episode}\n`;
+    setNoteContent((prevContent) => prevContent + newContent);
+    dispatch({ type: "ADD_NOTE_CONTENT", payload: newContent });
   };
 
   return (
     <div className="results">
       {results.map((anime) => (
         <div key={anime.filename} className="result">
-          <h2>{anime.filename}</h2>
+          <h5>{anime.filename}</h5>
           <p>Episode: {anime.episode}</p>
           
           {anime.video ? (
@@ -30,31 +30,25 @@ const DisplayResults = ({ results = [] }) => {
           ) : (
             <div>No video available</div>
           )}
-          
+          <br />
           <button
             type="button"
             onClick={() => handleAddNote(anime)}
           >
             Add Title and Episode to Note
           </button>
+          <br />
         </div>
       ))}
-
-      <div className="note-container">
-      <label htmlFor="note-content">Notes:</label>
-
-        <textarea
-          id="note-content"
-          value={noteContent}
-          onChange={(e) => setNoteContent(e.target.value)}
-          rows={5}
-          cols={40}
-          placeholder="Add your notes here"
-
-        />
-      </div>
+      <textarea
+        value={noteContent}
+        readOnly
+        rows={5}
+        style={{ width: "400px", marginTop: "20px" }}
+      />
     </div>
   );
 };
 
 export default DisplayResults;
+

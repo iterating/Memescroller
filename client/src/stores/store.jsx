@@ -1,10 +1,8 @@
 import { createStore, combineReducers } from "redux";
+import * as api from "../config/api";
 
 const initialState = {
-  sourceUrls: [
-    "https://www.reddit.com/r/animescreenshots.json?limit=700",
-    "https://www.reddit.com/r/animescenery.json?limit=700",
-  ],
+  sourceUrls: api.apiSources.animeSceneUrls
 };
 
 const rootReducer = combineReducers({
@@ -12,6 +10,8 @@ const rootReducer = combineReducers({
     type === "SET_SOURCE_URLS" ? payload : state,
   imageData: (state = [], { type, payload }) =>
     type === "SET_IMAGE_DATA" ? payload : state,
+  newContent: (state = "", { type, payload }) =>
+    type === "ADD_NOTE_CONTENT" ? state + payload : state,
 });
 
 const store = createStore(rootReducer);

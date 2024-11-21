@@ -38,58 +38,52 @@ document.addEventListener("DOMContentLoaded", function() {
   document.querySelector("#save-note").onclick = saveNote;
 });
 
-export async function fetchNotes() {
-  try {
+export const FetchNotes = () => {
+  const [notes, setNotes] = React.useState([]);
+
+  React.useEffect(() => {
+    const fetchNotes = async () => {
+      try {
         /// If cannot get pastebin, save last note from localstorage
         const lastNote = localStorage.getItem("lastNote");
         if (lastNote) {
           try {
             const note = JSON.parse(lastNote);
             if (note && note.content) {
-              const listItem = document.createElement("li");
-              listItem.textContent = `${note.title}-${note.content}`;
-              savedNotes.appendChild(listItem);
+              setNotes((prevNotes) => [...prevNotes, { title: note.title, content: note.content }]);
             } 
           } catch (error) {
             console.error("Error: Could not parse last note data:", error);
           }
         }
 
-    // Not using Pastebin API login
-    // const response = await axios.get(`${apiUrl}/favorites`);
-    // if (!response || !response.data) {
-    //   console.error("Error: Missing response data");
-    //   return;
-    // }
+        const response = await axios.get(`${apiUrl}/favorites`);
+        if (!response || !response.data) {
+          console.error("Error: Missing response data");
+          return;
+        }
 
-    savedNotes.innerHTML = ""; // Clear previous notes
-    
-    if (!savedNotes.firstChild) {
-      const lastNote = JSON.parse(localStorage.getItem("lastNote"));
-      if (lastNote) {
-        const listItem = document.createElement("li");
-        listItem.textContent = `${lastNote.title}-${lastNote.content}`;
-        savedNotes.appendChild(listItem);
+        setNotes(response.data);
+
+      } catch (error) {
+        console.error("Error:", error);
+
       }
-    }
+    };
 
-    // if (response.data.length > 0) {
-    //   response.data.forEach((note) => {
-    //     if (!note || !note.url) {
-    //       console.error("Error: Missing note data");
-    //       return;
-    //     }
-    //     const listItem = document.createElement("li");
-    //     listItem.innerHTML = `<a href="${note.url}" target="_blank">${note.title}</a>`;
-    //     savedNotes.appendChild(listItem);
-    //   });
-    // }
-  } catch (error) {
-    console.error("Error:", error);
+    fetchNotes();
+  }, []);
 
-  }
-
-
+  return (
+    <ul id="saved-notes">
+      {notes.length > 0 && notes.map((note) => (
+        <li key={note.url}>
+          <a href={note.url} target="_blank">{note.title}</a>
+        </li>
+      ))}
+    </ul>
+  );
 }
+
 
 export default fetchNotes;
