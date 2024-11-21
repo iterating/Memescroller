@@ -30,3 +30,5 @@ DocumentFragment and DOM methods are used to build content.
 Asynchronous functions were applied to keep an engaging user flow. 
 
 
+## Useage 
+`npm start` to run server and client
