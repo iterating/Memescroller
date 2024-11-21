@@ -30,6 +30,7 @@ const ToggleSlider = () => {
     <div>
       <input type="checkbox" id="toggle-slider" onChange={handleToggleSlider} />
       <label htmlFor="toggle-slider">Anime</label>
+      <span> </span>
       <label htmlFor="toggle-slider">Memes</label>
     </div>
   );

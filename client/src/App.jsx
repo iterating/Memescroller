@@ -4,11 +4,16 @@ import DisplayResults from "./components/DisplayResults";
 import DisplayImage from "./components/DisplayImage";
 import { PreviousButton, RandomButton, NextButton, AnalyzeButton, SaveNoteButton, ToggleSlider } from "./components/buttons";
 import FetchNotes from "./components/FetchNotes";
-import { useDispatch, connect, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import "./styles.css";
 
 const App = ({ sourceUrls, imageData }) => {
   const [index, setIndex] = useState(0);
+  const [results, setResults] = useState([]); // Store search results
+
+  const handleResults = (newResults) => {
+    setResults(newResults);
+  };
 
   return (
     <div>
@@ -16,15 +21,11 @@ const App = ({ sourceUrls, imageData }) => {
       <PreviousButton imageData={imageData} index={index} setIndex={setIndex} />
       <RandomButton imageData={imageData} setIndex={setIndex} />
       <NextButton imageData={imageData} index={index} setIndex={setIndex} />
-      <AnalyzeButton imageData={imageData} index={index} />
-      <ImageDataFetcher />
-      {imageData && imageData.length > 0 ? (
-        <>
-          <DisplayImage index={index} imageData={imageData} />
-        </>
-      ) : (
-        <div>No image URL available</div>
-      )}
+      <AnalyzeButton imageData={imageData} index={index} setResults={handleResults} />
+      <DisplayImage index={index} imageData={imageData} />
+      <ImageDataFetcher sourceUrls={sourceUrls} />
+      
+      {results.length > 0 && <DisplayResults results={results} />}
       <SaveNoteButton />
       <FetchNotes />
     </div>
@@ -36,5 +37,4 @@ const mapStateToProps = (state) => ({
   imageData: state.imageData,
 });
 
-export default connect(mapStateToProps)(App);
-
+export default connect(mapStateToProps)(App);  

@@ -1,26 +1,17 @@
 import { createStore, combineReducers } from "redux";
 
-const sourceUrlsReducer = (state = [], action) => {
-  switch (action.type) {
-    case "SET_SOURCE_URLS":
-      return action.payload;
-    default:
-      return state;
-  }
-};
-
-const imageDataReducer = (state = [], action) => {
-  switch (action.type) {
-    case "SET_IMAGE_DATA":
-      return action.payload;
-    default:
-      return state;
-  }
+const initialState = {
+  sourceUrls: [
+    "https://www.reddit.com/r/animescreenshots.json?limit=700",
+    "https://www.reddit.com/r/animescenery.json?limit=700",
+  ],
 };
 
 const rootReducer = combineReducers({
-  sourceUrls: sourceUrlsReducer,
-  imageData: imageDataReducer,
+  sourceUrls: (state = initialState.sourceUrls, { type, payload }) =>
+    type === "SET_SOURCE_URLS" ? payload : state,
+  imageData: (state = [], { type, payload }) =>
+    type === "SET_IMAGE_DATA" ? payload : state,
 });
 
 const store = createStore(rootReducer);
