@@ -5,7 +5,7 @@
 		"client": "vite ./client",
 		"server": "nodemon --watch ./server --exec \"node ./server/server.js\" --port 3000",
 		"start": "concurrently \"pnpm run client\" \"pnpm run server\"",
-		"build": "vite build ./client",
+		"build": "vite build ./client"
 
 	},
 	"dependencies": {
