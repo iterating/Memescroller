@@ -1,5 +1,6 @@
 const savedNotes = document.getElementById("saved-notes");
 const apiUrl = 'http://localhost:3000';
+import axios from "axios";
 
 
 
@@ -33,7 +34,9 @@ console.log(response.data.url);
   }
 }
 
-document.getElementById("save-note").addEventListener("click", saveNote);
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelector("#save-note").onclick = saveNote;
+});
 
 export async function fetchNotes() {
   try {
